@@ -13,8 +13,9 @@
 
     body {
       background-color: #e6e9ef;
-      font-family: 'Times New Roman', Georgia, serif;
-      line-height: 1.5;            /* 1.5 line spacing as required */
+      /*font-family: 'Times New Roman', Georgia, serif;*/
+      font-family: 'OpenSans', sans-serif;
+      line-height: 1.5;
       font-size: 12pt;
       color: #111;
       padding: 2rem 1rem;
@@ -26,11 +27,11 @@
       margin: 0 auto;
       background: #ffffff;
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border-radius: 4px;
+      border-radius: 16px;
       padding: 2rem 2.2rem;
     }
 
-    /* ========= HEADER SECTION (PFP + USER INFO + SUPERVISOR) ========= */
+
     .project-header {
       display: flex;
       align-items: center;
@@ -67,7 +68,6 @@
       text-transform: uppercase;
     }
 
-    /* if an actual image were used, we'd set img, but we use a styled div with initial */
     .student-details {
       line-height: 1.4;
     }
@@ -151,8 +151,6 @@
       font-weight: bold;
       margin-top: 1.4rem;
       margin-bottom: 0.6rem;
-      /*border-left: 4px solid #2c7da0;*/
-      /*padding-left: 12px;*/
       clear: both;
     }
 
@@ -176,7 +174,7 @@
       text-align: justify;
     }
 
-    /* block diagram styling */
+
     .block-diagram {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
@@ -273,16 +271,22 @@
 <body>
 <div class="document-container">
   
-  <!-- ========== HEADER WITH PFP, USERNAME, MATRIC NO, SUPERVISOR ========== -->
+
   <div class="project-header">
     <div class="profile-area">
-      <!-- profile picture placeholder (circular with initial) – can be replaced with actual image URL -->
       <div class="pfp" aria-label="Profile Picture">
         
       </div>
       <div class="student-details">
         <div class="student-name">Baltai Daniel</div>
         <div class="matric-no">ID No.: 22/05/04/0014</div>
+        <!-- <div class="matric-no">Current Revision: 
+            <select>
+              <option value="0"><a href="v1.html">Revision 1 (13th May, 2026)</a></option>
+              <option value="1"><a href="v2.html">Revision 2 (14th May, 2026)</a></option>
+              <option value="2"><a href="v3.html">Revision 3 (19th May, 2026)</a></option>
+            </select>
+        </div> -->
       </div>
     </div>
     <div class="supervisor-block">
@@ -291,18 +295,19 @@
     </div>
   </div>
 
-  <!-- MAIN TITLE -->
+
+
   <h1>Design and Construction of a Face‑Tracking Multi‑Parameter Health<br>Monitoring System with IoT Integration</h1>
 
-  <!-- ===================== 1. INTRODUCTION ===================== -->
+
   <h2>1. Introduction</h2>
   <p>Advancements in computer vision and machine learning have opened new avenues for non‑contact health monitoring. Traditional health assessment relies on contact‑based sensors such as chest straps, finger pulse oximeters and thermometers, which, while accurate, can cause discomfort and restrict continuous monitoring. In critical scenarios such as neonatal care, burn units or infectious disease outbreaks, physical contact may be undesirable or impractical. Contactless techniques based on remote photoplethysmography (rPPG) and facial analysis have emerged as promising alternatives. This study aims to design and construct a face‑tracking health monitor using an ordinary webcam connected to a Raspberry Pi, with the capability to estimate heart rate, breathing rate, emotional state, stress, fatigue and drowsiness. The system will process facial video streams in real time using Python together with OpenCV, NumPy and MediaPipe, and will incorporate a Wi‑Fi module for IoT connectivity, enabling remote data logging and alerts. By combining multiple health indicators through a single non‑invasive sensor, the proposed system offers a low‑cost, scalable solution for remote health monitoring.</p>
 
-  <!-- ===================== 2. PROBLEM STATEMENT ===================== -->
+
   <h2>2. Problem Statement</h2>
   <p>The timely detection of abnormal physiological states plays a key role in preventing medical emergencies such as cardiac events, respiratory distress and fatigue‑related accidents. However, many existing health monitors require deliberate user action (e.g., placing a finger on a sensor or wearing a chest strap) and provide only isolated measurements. The discontinuous approach may miss transient anomalies, while continuous contact‑based devices can be uncomfortable for long‑term use. Moreover, many low‑cost monitoring solutions lack the ability to assess multiple health parameters simultaneously, or to transmit data to a healthcare provider. There is therefore a need for a cost‑effective, non‑contact system that can continuously track several vital signs from a single video source and relay this information over the internet for remote observation and alerting.</p>
 
-  <!-- ===================== 3. AIM AND OBJECTIVES ===================== -->
+
   <h2>3. Aim and Objectives</h2>
   <p><strong>Aim:</strong> To design and construct an automated, face‑tracking health monitor that uses a standard webcam and a Raspberry Pi to measure heart rate, breathing rate, emotional state, stress, fatigue and drowsiness in real time, and to transmit these data to an IoT platform.</p>
   <p><strong>Objectives:</strong></p>
@@ -312,7 +317,7 @@
     <li>To integrate a Wi‑Fi module and upload all health metrics securely to an IoT cloud platform (e.g., Blynk or ThingSpeak).</li>
   </ol>
 
-  <!-- ===================== 4. METHODOLOGY (BLOCK DIAGRAM) ===================== -->
+
   <h2>4. Methodology (Block Diagram)</h2>
   <p>The system architecture is shown in Figure 1. A webcam continuously captures facial video, which is sent to the Raspberry Pi. Python scripts using OpenCV and MediaPipe detect the face and extract 468 landmarks. For rPPG, the forehead or cheek region is selected and the average green channel intensity is recorded over time. The raw signal is filtered, and a Fast Fourier Transform (FFT) yields heart rate and breathing rate. Simultaneously, MediaPipe provides eye‑aspect ratio (EAR) for drowsiness detection, head pose angles for attention and a facial expression classifier for emotion and stress. All derived metrics (heart rate, breathing rate, emotion, stress/fatigue level, drowsiness/attention) are displayed on a local dashboard. The Wi‑Fi module sends these data to an IoT cloud service (e.g., Blynk or ThingSpeak) for remote storage and visualisation. When a metric exceeds predefined thresholds (e.g., HR &lt; 50 or &gt; 120 bpm; eye closure &gt; 3 s), the system activates a local buzzer/LED and pushes a notification to a caregiver's smartphone.</p>
   
@@ -351,15 +356,15 @@
   
   <p>Processing pipeline steps: (1) Video acquisition and frame extraction; (2) MediaPipe face mesh detection; (3) Forehead ROI signal extraction (green channel) → rPPG analysis; (4) EAR and head pose for fatigue & drowsiness; (5) Metrics aggregation and local alarming; (6) JSON payload transmission to IoT cloud with timestamp. All modules operate concurrently, ensuring real‑time performance (15–30 FPS).</p>
 
-  <!-- ===================== 5. SIGNIFICANCE ===================== -->
+
   <h2>5. Significance of the Project</h2>
   <p>This project offers several significant benefits. First, it eliminates physical contact, making health monitoring feasible for users who cannot tolerate wearable sensors (e.g., burn victims, premature infants, elderly with sensitive skin). Second, it integrates multiple health indicators (cardiorespiratory, emotional, attentional) from a single, low‑cost webcam, reducing hardware expenses and complexity. Third, real‑time rPPG processing enables early detection of abnormal heart rates or breathing patterns, while the drowsiness detection module can help prevent fatigue‑related accidents in drivers or machine operators. Fourth, the IoT connectivity allows remote caregivers or family members to monitor a person's wellbeing without being physically present – an invaluable feature for telemedicine and home‑based elderly care. Finally, the open‑source software stack (Python, OpenCV, NumPy, MediaPipe) ensures reproducibility and easy adaptation for further research or clinical applications.</p>
 
-  <!-- ===================== 6. SCOPE ===================== -->
+
   <h2>6. Scope of the Project</h2>
   <p>The scope of this project is limited to the development and testing of a prototype non‑contact health monitor using a Raspberry Pi (any model with sufficient processing power, e.g., Pi 4 or Pi 5) and a standard USB webcam. The system will be designed for single‑person use in a static or semi‑static environment (e.g., seated at a desk or in front of a monitor). Ethical and privacy concerns are acknowledged, and the prototype is intended for research validation only – it is not a certified medical device. The IoT component will be implemented using a free‑tier cloud service (Blynk or ThingSpeak) with Wi‑Fi connectivity; security measures such as API key authentication are considered within best‑effort scope. The system will be tested in typical indoor lighting conditions with skin‑tone variability considered during performance evaluation. No external sensors (e.g., contact oximeter) are required for operation, but such a reference will be used only for validation.</p>
 
-  <!-- ===================== 7. EXPECTED OUTCOMES ===================== -->
+
   <h2>7. Expected Outcomes</h2>
   <p>Upon completion, the following specific outcomes are anticipated:</p>
   <ul>
@@ -371,7 +376,7 @@
   </ul>
   
 
-  <!-- ===================== 8. REFERENCES (AUTHENTIC SEARCHED SOURCES) ===================== -->
+
   <h2>8. References</h2>
   <ul class="references">
     <li>[1] H. W. Loh, C. P. Ooi, A. S. Malik, and U. R. Acharya, “Conventional and deep learning methods in heart rate estimation from RGB face videos,” <em>Physiological Measurement</em>, vol. 44, no. 1, Dec. 2023, doi: 10.1088/1361‑6579/ad1458.</li>
