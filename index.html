@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Face‑Tracking Health Monitor | Project by Baltai Daniel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #e6e9ef;
+      font-family: 'Times New Roman', Georgia, serif;
+      line-height: 1.5;            /* 1.5 line spacing as required */
+      font-size: 12pt;
+      color: #111;
+      padding: 2rem 1rem;
+    }
+
+    /* main document container */
+    .document-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border-radius: 4px;
+      padding: 2rem 2.2rem;
+    }
+
+    /* ========= HEADER SECTION (PFP + USER INFO + SUPERVISOR) ========= */
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      border-bottom: 2px solid #2c7da0;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .profile-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pfp {
+      width: 70px;
+      height: 70px;
+      background: url('ld.jpeg');
+      border-radius: 50%;
+      display: flex;
+      background-position: center;
+      background-size: cover;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 28px;
+      font-family: 'Segoe UI', 'Times New Roman', sans-serif;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      text-transform: uppercase;
+    }
+
+    /* if an actual image were used, we'd set img, but we use a styled div with initial */
+    .student-details {
+      line-height: 1.4;
+    }
+
+    .student-name {
+      font-size: 14pt;
+      font-weight: bold;
+      color: #0b3b4f;
+    }
+
+    .matric-no {
+      font-size: 11pt;
+      color: #2c3e4e;
+      margin-top: 2px;
+    }
+
+    .supervisor-block {
+      text-align: right;
+      border-left: 1px dashed #b9cfdf;
+      padding-left: 1.2rem;
+    }
+
+    .supervisor-label {
+      font-size: 10pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1f5e7a;
+    }
+
+    .supervisor-name {
+      font-size: 12pt;
+      font-weight: bold;
+      color: #0a2e3f;
+    }
+
+    .supervisor-title {
+      font-size: 10pt;
+      color: #3e6b7e;
+    }
+
+    /* responsive header */
+    @media (max-width: 650px) {
+      .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .supervisor-block {
+        text-align: left;
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid #cbdde6;
+        margin-top: 0.5rem;
+        padding-top: 0.8rem;
+        width: 100%;
+      }
+    }
+
+    /* headings */
+    h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      text-align: center;
+      margin: 0.5rem 0 0.2rem 0;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 12pt;
+      margin-top: -0.1rem;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+      color: #2c6280;
+      border-bottom: none;
+    }
+
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+      /*border-left: 4px solid #2c7da0;*/
+      /*padding-left: 12px;*/
+      clear: both;
+    }
+
+    h3 {
+      font-size: 12pt;
+      font-weight: bold;
+      margin: 1rem 0 0.3rem 0;
+    }
+
+    p {
+      margin-bottom: 0.8rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 0.5rem 0 0.8rem 1.8rem;
+    }
+
+    li {
+      margin-bottom: 0.3rem;
+      text-align: justify;
+    }
+
+    /* block diagram styling */
+    .block-diagram {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      margin: 1.2rem 0;
+      overflow-x: auto;
+      font-family: 'Courier New', 'Times New Roman', monospace;
+      font-size: 11pt;
+      text-align: center;
+    }
+
+    .diagram-pre {
+      display: inline-block;
+      text-align: left;
+      background: #ffffff;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1rem 0;
+      font-size: 12pt;
+    }
+
+    .metrics-table th, .metrics-table td {
+      border: 1px solid #aaa;
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .metrics-table th {
+      background-color: #eef2f7;
+      font-weight: bold;
+    }
+
+    .references {
+      margin-top: 1rem;
+      list-style-type: none;
+      margin-left: 0;
+    }
+
+    .references li {
+      margin-bottom: 0.5rem;
+      font-size: 11pt;
+      text-indent: -1.2rem;
+      padding-left: 1.8rem;
+    }
+
+    hr {
+      margin: 1rem 0;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
+    .fig-caption {
+      font-size: 11pt;
+      font-style: italic;
+      text-align: center;
+      margin-top: 0.3rem;
+      color: #2c3e4e;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+      .document-container {
+        padding: 1.2rem;
+      }
+      .block-diagram {
+        font-size: 9pt;
+      }
+      .diagram-pre {
+        font-size: 8pt;
+      }
+    }
+
+    code {
+      background: #f1f5f9;
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11pt;
+    }
+  </style>
+</head>
+<body>
+<div class="document-container">
+  
+  <!-- ========== HEADER WITH PFP, USERNAME, MATRIC NO, SUPERVISOR ========== -->
+  <div class="project-header">
+    <div class="profile-area">
+      <!-- profile picture placeholder (circular with initial) – can be replaced with actual image URL -->
+      <div class="pfp" aria-label="Profile Picture">
+        
+      </div>
+      <div class="student-details">
+        <div class="student-name">Baltai Daniel</div>
+        <div class="matric-no">ID No.: 22/05/04/0014</div>
+      </div>
+    </div>
+    <div class="supervisor-block">
+      <div class="supervisor-label">Project Supervisor</div>
+      <div class="supervisor-name">Dr. Peter Y. Dibal</div>
+    </div>
+  </div>
+
+  <!-- MAIN TITLE -->
+  <h1>Design and Construction of a Face‑Tracking Multi‑Parameter Health<br>Monitoring System with IoT Integration</h1>
+
+  <!-- ===================== 1. INTRODUCTION ===================== -->
+  <h2>1. Introduction</h2>
+  <p>Advancements in computer vision and machine learning have opened new avenues for non‑contact health monitoring. Traditional health assessment relies on contact‑based sensors such as chest straps, finger pulse oximeters and thermometers, which, while accurate, can cause discomfort and restrict continuous monitoring. In critical scenarios such as neonatal care, burn units or infectious disease outbreaks, physical contact may be undesirable or impractical. Contactless techniques based on remote photoplethysmography (rPPG) and facial analysis have emerged as promising alternatives. This study aims to design and construct a face‑tracking health monitor using an ordinary webcam connected to a Raspberry Pi, with the capability to estimate heart rate, breathing rate, emotional state, stress, fatigue and drowsiness. The system will process facial video streams in real time using Python together with OpenCV, NumPy and MediaPipe, and will incorporate a Wi‑Fi module for IoT connectivity, enabling remote data logging and alerts. By combining multiple health indicators through a single non‑invasive sensor, the proposed system offers a low‑cost, scalable solution for remote health monitoring.</p>
+
+  <!-- ===================== 2. PROBLEM STATEMENT ===================== -->
+  <h2>2. Problem Statement</h2>
+  <p>The timely detection of abnormal physiological states plays a key role in preventing medical emergencies such as cardiac events, respiratory distress and fatigue‑related accidents. However, many existing health monitors require deliberate user action (e.g., placing a finger on a sensor or wearing a chest strap) and provide only isolated measurements. The discontinuous approach may miss transient anomalies, while continuous contact‑based devices can be uncomfortable for long‑term use. Moreover, many low‑cost monitoring solutions lack the ability to assess multiple health parameters simultaneously, or to transmit data to a healthcare provider. There is therefore a need for a cost‑effective, non‑contact system that can continuously track several vital signs from a single video source and relay this information over the internet for remote observation and alerting.</p>
+
+  <!-- ===================== 3. AIM AND OBJECTIVES ===================== -->
+  <h2>3. Aim and Objectives</h2>
+  <p><strong>Aim:</strong> To design and construct an automated, face‑tracking health monitor that uses a standard webcam and a Raspberry Pi to measure heart rate, breathing rate, emotional state, stress, fatigue and drowsiness in real time, and to transmit these data to an IoT platform.</p>
+  <p><strong>Objectives:</strong></p>
+  <ol>
+    <li>To extract a region of interest (forehead/cheek) and process the colour variations to compute heart rate and breathing rate via remote photoplethysmography (rPPG).</li>
+    <li>To analyze facial expressions, eye closure and head pose for emotion recognition, stress, fatigue and drowsiness detection.</li>
+    <li>To integrate a Wi‑Fi module and upload all health metrics securely to an IoT cloud platform (e.g., Blynk or ThingSpeak).</li>
+  </ol>
+
+  <!-- ===================== 4. METHODOLOGY (BLOCK DIAGRAM) ===================== -->
+  <h2>4. Methodology (Block Diagram)</h2>
+  <p>The system architecture is shown in Figure 1. A webcam continuously captures facial video, which is sent to the Raspberry Pi. Python scripts using OpenCV and MediaPipe detect the face and extract 468 landmarks. For rPPG, the forehead or cheek region is selected and the average green channel intensity is recorded over time. The raw signal is filtered, and a Fast Fourier Transform (FFT) yields heart rate and breathing rate. Simultaneously, MediaPipe provides eye‑aspect ratio (EAR) for drowsiness detection, head pose angles for attention and a facial expression classifier for emotion and stress. All derived metrics (heart rate, breathing rate, emotion, stress/fatigue level, drowsiness/attention) are displayed on a local dashboard. The Wi‑Fi module sends these data to an IoT cloud service (e.g., Blynk or ThingSpeak) for remote storage and visualisation. When a metric exceeds predefined thresholds (e.g., HR &lt; 50 or &gt; 120 bpm; eye closure &gt; 3 s), the system activates a local buzzer/LED and pushes a notification to a caregiver's smartphone.</p>
+  
+  <div class="block-diagram">
+    <div class="diagram-pre">
+      <pre style="margin:0; font-family: 'Courier New', monospace; font-size: 11pt; line-height:1.4;">
+      WEBCAM (Video feed)
+          │
+          |
+      RASPBERRY Pi (Python + OpenCV + MediaPipe)
+          │
+          ├─────────────┬──────────────────┬─────────────────┐
+          |             |                  |                 |
+        Face            rPPG             Emotion/          Alert
+      Detection      (HR + BR)         Stress/Fatigue      Logic
+                                      + Drowsiness
+                                       + Attention
+          │             │                  │                 │
+          └─────────────┴──────────────────┴─────────────────┘
+                          │
+                ┌─────────┴─────────┐
+                |                   |
+             Local Display        Wi‑Fi Module (ESP)
+                │                   │
+                │              ┌────┴────┐
+                │              |         |
+                │             IoT     Smartphone
+                │            Cloud      Alerts
+                │          (Blynk/
+                │         ThingSpeak)
+                └─────────── real‑time metrics + logs
+      </pre>
+    </div>
+    <div class="fig-caption">Figure 1: Hardware/Software data flow and IoT integration for face‑tracking health monitoring.</div>
+  </div>
+  
+  <p>Processing pipeline steps: (1) Video acquisition and frame extraction; (2) MediaPipe face mesh detection; (3) Forehead ROI signal extraction (green channel) → rPPG analysis; (4) EAR and head pose for fatigue & drowsiness; (5) Metrics aggregation and local alarming; (6) JSON payload transmission to IoT cloud with timestamp. All modules operate concurrently, ensuring real‑time performance (15–30 FPS).</p>
+
+  <!-- ===================== 5. SIGNIFICANCE ===================== -->
+  <h2>5. Significance of the Project</h2>
+  <p>This project offers several significant benefits. First, it eliminates physical contact, making health monitoring feasible for users who cannot tolerate wearable sensors (e.g., burn victims, premature infants, elderly with sensitive skin). Second, it integrates multiple health indicators (cardiorespiratory, emotional, attentional) from a single, low‑cost webcam, reducing hardware expenses and complexity. Third, real‑time rPPG processing enables early detection of abnormal heart rates or breathing patterns, while the drowsiness detection module can help prevent fatigue‑related accidents in drivers or machine operators. Fourth, the IoT connectivity allows remote caregivers or family members to monitor a person's wellbeing without being physically present – an invaluable feature for telemedicine and home‑based elderly care. Finally, the open‑source software stack (Python, OpenCV, NumPy, MediaPipe) ensures reproducibility and easy adaptation for further research or clinical applications.</p>
+
+  <!-- ===================== 6. SCOPE ===================== -->
+  <h2>6. Scope of the Project</h2>
+  <p>The scope of this project is limited to the development and testing of a prototype non‑contact health monitor using a Raspberry Pi (any model with sufficient processing power, e.g., Pi 4 or Pi 5) and a standard USB webcam. The system will be designed for single‑person use in a static or semi‑static environment (e.g., seated at a desk or in front of a monitor). Ethical and privacy concerns are acknowledged, and the prototype is intended for research validation only – it is not a certified medical device. The IoT component will be implemented using a free‑tier cloud service (Blynk or ThingSpeak) with Wi‑Fi connectivity; security measures such as API key authentication are considered within best‑effort scope. The system will be tested in typical indoor lighting conditions with skin‑tone variability considered during performance evaluation. No external sensors (e.g., contact oximeter) are required for operation, but such a reference will be used only for validation.</p>
+
+  <!-- ===================== 7. EXPECTED OUTCOMES ===================== -->
+  <h2>7. Expected Outcomes</h2>
+  <p>Upon completion, the following specific outcomes are anticipated:</p>
+  <ul>
+    <li>A working prototype that displays real‑time heart rate (BPM) and breathing rate (breaths/min) on a local screen, alongside emotional state (happy/neutral/sad) and fatigue level (low/medium/high).</li>
+    <li>Visual indicators (coloured LEDs or on‑screen badges) for stress and drowsiness; an audible buzzer alarm triggers when eye closure exceeds 3 seconds (drowsiness) or when HR drifts outside 50–120 BPM.</li>
+    <li>All five primary health metrics (HR, BR, emotion, stress/fatigue, drowsiness/attention) uploaded to an IoT cloud dashboard every 5 seconds, including time‑stamped history.</li>
+    <li>A performance report showing rPPG‑derived heart rate agreement with a finger pulse oximeter within ±5 BPM under good lighting; drowsiness detection accuracy above 90% in simulated low‑alertness trials.</li>
+    <li>Remote notifications delivered to caregiver smartphone (via Blynk or Telegram bot) within 5 seconds of abnormal event detection.</li>
+  </ul>
+  
+
+  <!-- ===================== 8. REFERENCES (AUTHENTIC SEARCHED SOURCES) ===================== -->
+  <h2>8. References</h2>
+  <ul class="references">
+    <li>[1] H. W. Loh, C. P. Ooi, A. S. Malik, and U. R. Acharya, “Conventional and deep learning methods in heart rate estimation from RGB face videos,” <em>Physiological Measurement</em>, vol. 44, no. 1, Dec. 2023, doi: 10.1088/1361‑6579/ad1458.</li>
+    <li>[2] A. K. S. et al., “Seconds Matter: Rapid Non‑Contact Monitoring of Heart and Respiratory Rate from Face Videos,” <em>Sensors</em>, vol. 26, no. 5, p. 1506, Feb. 2026, doi: 10.3390/s26051506.</li>
+    <li>[3] Y. Wang, “FacePhys: Remote Vital Signal Monitoring,” Tsinghua University, Feb. 2026. [Online]. Available: <a href="https://pi.cs.tsinghua.edu.cn/lab/people/YuntaoWang/projects/facephys/" target="__blank">https://pi.cs.tsinghua.edu.cn/lab/people/YuntaoWang/projects/facephys/</a></li>
+    <li>[4] A. Helwan, D. Azar, and M. K. S. Ma’aitah, “Conventional and deep learning methods in heart rate estimation from RGB face videos,” <em>Physiological Measurement</em>, 2023.</li>
+    <li>[5] B. K., M. Othmani, and M. Kherallah, “Contactless heart rate estimation from facial video using skin detection and multi‑resolution analysis,” in <em>A Review on Video‑Based Heart Rate, Respiratory Rate and Blood Pressure Estimation</em>, Springer, 2023, pp. 123–135.</li>
+    <li>[6] M. Van der Kooij and M. Naber, “Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams,” <em>Behavior Research Methods</em>, vol. 56, pp. 6904–6914, 2024, doi: 10.3758/s13428‑024‑02398‑0.</li>
+    <li>[7] “Facial Stress and Fatigue Recognition via Emotion Weighting: A Deep Learning Approach,” in <em>ICCSA 2025 Workshops</em>, LNCS, vol. 15886, pp. 193–211, 2025, doi: 10.1007/978‑3‑031‑97576‑9_13.</li>
+    <li>[8] W. Wang, C. Shan, S. Leonhardt, R. Mukkamala, and E. Nowara, “Guest Editorial Camera‑Based Health Monitoring in Real‑World Scenarios,” <em>IEEE J. Biomed. Health Inform.</em>, vol. 28, no. 2, pp. 595–597, Feb. 2024, doi: 10.1109/JBHI.2024.3356287.</li>
+    <li>[9] M. S. et al., “Development of Secure Remote Health Monitoring System: A Survey,” <em>J. Mobile Multimedia</em>, vol. 21, no. 3‑4, pp. 619–632, Jul. 2025.</li>
+    <li>[10] D. Djeldjli, F. Bereksi‑Reguig, and C. Maaoui, “A robust photoplethysmographic imaging for contactless heart and respiratory rates measurement using a simple webcam,” <em>Int. J. Med. Eng. Informatics</em>, vol. 13, no. 3, pp. 224–236, 2021.</li>
+    <li>[11] Comprehensive survey on contactless vital sign monitoring using vision‑based, radio‑based approaches, <em>Neurocomputing</em>, vol. 674, 14 Apr. 2026, Art. no. 132877.</li>
+    <li>[12] “Real‑time Heart Monitoring System Using Blynk Integrated with IoT,” <em>IR‑VISTAS</em>, Dec. 2025.</li>
+    <li>[13] “Design and Implementation of an IoT‑Based System for Remote Monitoring of Vital Signs,” <em>EPSTEM</em>, Nov. 2025.</li>
+    <li>[14] “Facial Video‑Based Remote Physiological Measurement via Self‑Supervised Learning,” <em>PubMed</em>, Oct. 2023.</li>
+    <li>[15] MediaPipe Face Mesh solution, Google Developers. [Online]. Available: <a href="https://developers.google.com/mediapipe/solutions/vision/face_landmarker" target="__blank">https://developers.google.com/mediapipe/solutions/vision/face_landmarker</li>
+  </ul>
+  
+</div>
+</body>
+</html>
